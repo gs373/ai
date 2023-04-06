@@ -2,7 +2,7 @@ from sys import maxsize
 from itertools import permutations
 V = 4
 
-# implementation of traveling Salesman Problem
+
 def tsp(graph, s):
 
 	# store all vertex apart from source vertex
