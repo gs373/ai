@@ -1,0 +1,43 @@
+from collections import deque
+
+def water_jug(start_jug1, start_jug2, target):
+    # Use a deque to store the possible states
+    states = deque([(0, 0)])
+    visited = set([(0, 0)])
+    actions = []
+    
+    while states:
+        current = states.popleft()
+        
+        # Check if the target amount of water is obtained
+        if current[0] == target or current[1] == target:
+            return actions
+        
+        # Try all possible pours
+        for pour in [(0, 1), (1, 0), (1, 1)]:
+            new_state = (current[0]+pour[0]*(start_jug1-current[0]-current[1]), 
+                         current[1]+pour[1]*(start_jug2-current[0]-current[1]))
+            
+            if new_state not in visited:
+                visited.add(new_state)
+                states.append(new_state)
+                actions.append(pour)
+    
+    # If target not reached, return None
+    return None
+
+# Example usage
+start_jug1 = 5
+start_jug2 = 3
+target = 4
+actions = water_jug(start_jug1, start_jug2, target)
+if actions:
+    for action in actions:
+        if action == (0, 1):
+            print("Pour from jug 2 into jug 1")
+        elif action == (1, 0):
+            print("Pour from jug 1 into jug 2")
+        else:
+            print("Fill jug 1 and pour into jug 2")
+else:
+    print("Target cannot be reached")
