@@ -2,7 +2,7 @@ import itertools
 import math
 
 def tsp(cities):
-    # Create a list of all possible orderings of the cities
+   
     permutations = itertools.permutations(range(len(cities)))
 
     # Calculate the total distance of each ordering
