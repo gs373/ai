@@ -1,25 +1,42 @@
-import itertools
-import math
+from sys import maxsize
+from itertools import permutations
+V = 4
 
-def tsp(cities):
-   
-    permutations = itertools.permutations(range(len(cities)))
+# implementation of traveling Salesman Problem
+def tsp(graph, s):
 
-    # Calculate the total distance of each ordering
-    best_distance = math.inf
-    best_ordering = None
-    for ordering in permutations:
-        distance = 0
-        for i in range(len(ordering)):
-            current_city = ordering[i]
-            next_city = ordering[(i + 1) % len(ordering)]
-            distance += math.sqrt((cities[current_city][0] - cities[next_city][0]) ** 2 + (cities[current_city][1] - cities[next_city][1]) ** 2)
-        if distance < best_distance:
-            best_distance = distance
-            best_ordering = ordering
+	# store all vertex apart from source vertex
+	vertex = []
+	for i in range(V):
+		if i != s:
+			vertex.append(i)
 
-    return (best_ordering, best_distance)
+	# store minimum weight Hamiltonian Cycle
+	min_path = maxsize
+	next_permutation=permutations(vertex)
+	for i in next_permutation:
+
+		# store current Path weight(cost)
+		current_pathweight = 0
+
+		# compute current path weight
+		k = s
+		for j in i:
+			current_pathweight += graph[k][j]
+			k = j
+		current_pathweight += graph[k][s]
+
+		# update minimum
+		min_path = min(min_path, current_pathweight)
+		
+	return min_path
 
 
-cities = [(0, 0), (1, 1), (2, 2), (3, 3)]
-print(tsp(cities))
+
+if __name__ == "__main__":
+
+	# matrix representation of graph
+	graph = [[0, 10, 15, 20], [10, 0, 35, 25],
+			[15, 35, 0, 30], [20, 25, 30, 0]]
+	s = 0
+	print(tsp(graph, s))
