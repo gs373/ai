@@ -20,6 +20,6 @@ def tsp(cities):
 
     return (best_ordering, best_distance)
 
-# Example usage
+
 cities = [(0, 0), (1, 1), (2, 2), (3, 3)]
 print(tsp(cities))
